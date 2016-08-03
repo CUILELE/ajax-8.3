@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				font-size: 30px;
+				line-height: 1.9;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>员工信息</h1>
+		<label>员工编号:</label>
+		<input type="text" name="keyword" id="keyword" value="" />
+		<button id="search">查询</button>
+		<p id="jieguo"></p>
+
+		<h1>员工新建</h1>
+		<label>员工姓名:</label>
+		<input type="text" name="" id="name" value="" /></br>
+		<label>员工编号:</label>
+		<input type="text" name="" id="number" value="" /></br>
+		<label>员工性别:</label>
+		<select id="nannv">
+			<option>男</option>
+			<option>女</option>
+		</select>
+		</br>
+		<label>员工职位:</label>
+		<input type="text" name="" id="job" value="" /></br>
+		<button id="save">保存</button>
+		<p id="yesno">11</p>
+		<script type="text/javascript">
+			document.getElementById('search').onclick = function (){
+				var ajax = new XMLHttpRequest();
+				ajax.open("GET","php/server.php?number="+document.getElementById('keyword').value);
+				ajax.send()
+				ajax.onreadystatechange = function (){
+					if(ajax.readyState === 4){
+						if(ajax.status === 200){
+							document.getElementById('jieguo').innerHTML = ajax.responseText;
+						}else{
+							alert("错误"+ajax.status)
+						}
+					}
+				}
+			}
+			document.getElementById('save').onclick = function (){
+				var ajax = new XMLHttpRequest();
+				ajax.open('POST','php/server.php');
+				var tex = "name="+document.getElementById('name').value
+							+"&number="+document.getElementById('number').value
+							+"&sex="+document.getElementById('nannv').value
+							+"&job="+document.getElementById('job').value
+				ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				console.log(tex)
+				ajax.send(tex)
+				
+				ajax.onreadystatechange = function (){
+					if(ajax.readyState === 4){
+						if(ajax.status === 200){
+							document.getElementById('yesno').innerHTML = ajax.responseText;
+						}else{
+							alert("cuowu"+ajax.status)
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+
+</html>
